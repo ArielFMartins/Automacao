@@ -1,0 +1,40 @@
+#!/bin/bash
+
+sudo su
+
+until [ "$vpn" = "s" ]
+do
+  echo "Sua VPN esta conectada? Digite: S ou N"
+  read vpn
+done
+
+echo "Instalando o Net-tools"
+sudo apt install net-tools
+
+echo "Atualizando o Linux"
+sudo apt update
+
+echo "Rodando Upgrade"
+sudo apt upgrade
+
+echo "Vamos excluir o nosso controle de inventario"
+cd /opt/LansweeperAgent/
+sudo ./uninstall
+
+echo "Baixando nova versão do nosso Controle de Inventário"
+sudo wget https://cdn.lansweeper.com/build/lsagent/LsAgent-linux-x64_9.1.0.2.run
+sudo chmod +x LsAgent-linux-x64_9.1.0.2.run
+
+
+until [ "$reboot" = "s" ]
+do
+  echo "Podemos reiniciar sua máquina? Digite: S ou N"
+  read reboot
+done
+
+reboot
+
+sudo ./LsAgent-linux-x64_9.1.0.2.run
+	IP: 192.168.10.15
+        PORTA: "PADRÃO"
+        KEY: "VAZIO"
